@@ -18,6 +18,12 @@ You are guaranteed to have only one unique value in the BST that is closest to t
 class Solution {
 public:
     int closestValue(TreeNode* root, double target) {
-        
+        auto kid = root->val >= target ? root->left : root->right;
+        if (kid == nullptr) {
+            return root->val;
+        } else {
+            int kidClosestValue = closestValue(kid, target);
+            return abs(kidClosestValue - target) < abs(root->val - target) ? kidClosestValue : root->val;
+        }
     }
 };
